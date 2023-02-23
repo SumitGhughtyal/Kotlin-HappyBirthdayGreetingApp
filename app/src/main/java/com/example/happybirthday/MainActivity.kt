@@ -3,17 +3,21 @@ package com.example.happybirthday
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.Image
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.happybirthday.ui.theme.HappyBirthdayTheme
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    BirthdayGreetingText( message = "Happy Birthday Sumit Ghughtyal!" , from = " ~ from Khushi Pant")
+                    BirthdayGreetingImage( message = getString(R.string.happy_birthday_text) , from = getString(
+                                            R.string.signature))
                 }
             }
         }
@@ -34,14 +39,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 
-fun BirthdayGreetingText(message : String , from : String) {
+fun BirthdayGreetingText(message : String , from : String , modifier: Modifier  = Modifier) {
     Column{
         Text(
-            text = message , fontSize = 20.sp
+            text = message , fontSize = 20.sp,
+            modifier = Modifier.fillMaxWidth().wrapContentWidth(align = Alignment.Start).padding(start = 16.dp, top = 16.dp)
+
+
         )
 
         Text(
-            text = from , fontSize = 16.sp
+            text = from , fontSize = 16.sp,
+            modifier = Modifier.fillMaxWidth().wrapContentWidth(align = Alignment.End).padding(start = 16.dp, end = 16.dp)
         )
         
     }
@@ -50,14 +59,29 @@ fun BirthdayGreetingText(message : String , from : String) {
 
 }
 
-
-
-
-@Preview(showBackground = true )
 @Composable
-fun BirthdayGreetingTextPreview() {
+fun BirthdayGreetingImage(message : String , from : String, modifier : Modifier = Modifier){
+    val image = painterResource(R.drawable.androidparty)
+    Box {
+        Image(
+            painter  = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+
+        )
+        BirthdayGreetingText(message = message, from = from)
+    }
+
+}
+
+
+
+
+@Preview(showBackground = false )
+@Composable
+fun BirthdayGreetingImagePreview() {
     HappyBirthdayTheme {
-        BirthdayGreetingText( message = "Happy Birthday Sumit Ghughtyal !" ,  "  ~ from Khushi Pant" )
+        BirthdayGreetingImage( message = "Happy Birthday Sumit Ghughtyal !" ,  "  ~ from Khushi Pant" )
 
     }
 }
